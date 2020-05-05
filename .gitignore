@@ -1,5 +1,6 @@
 # infer
 infer-out/
+Vendor/GPUImage/
 
 # Xcode
 .DS_Store
