@@ -110,15 +110,11 @@
 }
 
 - (void)pushVideo:(nullable CVPixelBufferRef)pixelBuffer{
-    if(self.captureType & LFLiveInputMaskVideo){
-        if (self.uploading) [self.videoEncoder encodeVideoData:pixelBuffer timeStamp:NOW];
-    }
+    if (self.uploading) [self.videoEncoder encodeVideoData:pixelBuffer timeStamp:NOW];
 }
 
 - (void)pushAudio:(nullable NSData*)audioData{
-    if(self.captureType & LFLiveInputMaskAudio){
-        if (self.uploading) [self.audioEncoder encodeAudioData:audioData timeStamp:NOW];
-    }
+    if (self.uploading) [self.audioEncoder encodeAudioData:audioData timeStamp:NOW];
 }
 
 #pragma mark -- PrivateMethod
@@ -215,14 +211,22 @@
     }
 }
 
+- (void)configDeviceRunningForCamera:(BOOL)camera microphone:(BOOL)microphone {
+    if (camera) {
+        self.videoCaptureSource.running = camera;
+    }
+    
+    if (microphone){
+        self.audioCaptureSource.running = microphone;
+    }
+}
+
 #pragma mark -- Getter Setter
 - (void)setRunning:(BOOL)running {
     if (_running == running) return;
     [self willChangeValueForKey:@"running"];
     _running = running;
     [self didChangeValueForKey:@"running"];
-    self.videoCaptureSource.running = _running;
-    self.audioCaptureSource.running = _running;
 }
 
 - (void)setPreView:(UIView *)preView {

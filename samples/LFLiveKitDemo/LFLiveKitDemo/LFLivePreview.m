@@ -70,6 +70,7 @@ inline static NSString *formatedSpeed(float bytes, float elapsed_milli) {
         [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
                 if (granted) {
                     dispatch_async(dispatch_get_main_queue(), ^{
+                        [_self.session configDeviceRunningForCamera:YES microphone:YES];
                         [_self.session setRunning:YES];
                     });
                 }
@@ -79,6 +80,7 @@ inline static NSString *formatedSpeed(float bytes, float elapsed_milli) {
     case AVAuthorizationStatusAuthorized: {
         // 已经开启授权，可继续
         dispatch_async(dispatch_get_main_queue(), ^{
+            [_self.session configDeviceRunningForCamera:YES microphone:YES];
             [_self.session setRunning:YES];
         });
         break;
@@ -359,7 +361,7 @@ inline static NSString *formatedSpeed(float bytes, float elapsed_milli) {
             if (_self.startLiveButton.selected) {
                 [_self.startLiveButton setTitle:@"结束直播" forState:UIControlStateNormal];
                 LFLiveStreamInfo *stream = [LFLiveStreamInfo new];
-                stream.url = @"rtmp://live.hkstv.hk.lxdns.com:1935/live/stream153";
+                stream.url = @"rtmp://bvc.live-send.acg.tv/live-bvc/?streamname=live_28800896_3667210&key=f4107af62fb0089a447ab46ec12eae04";
                 [_self.session startLive:stream];
             } else {
                 [_self.startLiveButton setTitle:@"开始直播" forState:UIControlStateNormal];
